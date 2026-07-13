@@ -23,23 +23,24 @@ def save_to_db(data):
     conn.close()
 
 def find_author(soup):
-    selectors = [
-        {'type': 'meta', 'attr': {'name': 'author'}},
-        {'type': 'span', 'attr': {'class': 'autor'}},
-        {'type': 'div', 'attr': {'class': 'nume-autor'}},
-        {'type': 'a', 'attr': {'class': 'author-name'}},
-        {'type': 'p', 'attr': {'class': 'author'}}
-    ]
-    
-    for s in selectors:
-        if s['type'] == 'meta':
-            res = soup.find('meta', s['attr'])
-            if res and res.get('content'):
-                return res.get('content').strip()
-        else:
-            res = soup.find(s['type'], s['attr'])
-            if res and res.text.strip():
-                return res.text.strip()
+    mediafax_element = soup.find('span', class_='single__authors')
+    if mediafax_element:
+        autor_link = mediafax_element.find('a')
+        if autor_link:
+            return autor_link.text.strip()
+        return mediafax_element.text.strip()
+
+    protv_element = soup.find('div', class_='author--name')
+    if protv_element:
+        autor_link = protv_element.find('a')
+        if autor_link:
+            return autor_link.text.strip()
+        return protv_element.text.strip()
+
+    meta_author = soup.find('meta', {'name': 'author'})
+    if meta_author and meta_author.get('content'):
+        return meta_author.get('content').strip()
+
     return 'Anonim'
 
 def scrape_article(url):
