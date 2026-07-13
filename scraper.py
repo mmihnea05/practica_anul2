@@ -22,6 +22,26 @@ def save_to_db(data):
     conn.commit()
     conn.close()
 
+def find_author(soup):
+    selectors = [
+        {'type': 'meta', 'attr': {'name': 'author'}},
+        {'type': 'span', 'attr': {'class': 'autor'}},
+        {'type': 'div', 'attr': {'class': 'nume-autor'}},
+        {'type': 'a', 'attr': {'class': 'author-name'}},
+        {'type': 'p', 'attr': {'class': 'author'}}
+    ]
+    
+    for s in selectors:
+        if s['type'] == 'meta':
+            res = soup.find('meta', s['attr'])
+            if res and res.get('content'):
+                return res.get('content').strip()
+        else:
+            res = soup.find(s['type'], s['attr'])
+            if res and res.text.strip():
+                return res.text.strip()
+    return 'Anonim'
+
 def scrape_article(url):
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers)
@@ -30,9 +50,7 @@ def scrape_article(url):
     data = {
     'source': soup.find('meta', property='og:site_name')['content'] if soup.find('meta', property='og:site_name') else 'SursaNecunoscuta',
     
-    'author': (soup.find('meta', {'name': 'author'})['content'] 
-               if soup.find('meta', {'name': 'author'}) 
-               else (soup.find('span', class_='autor').text.strip() if soup.find('span', class_='autor') else 'Anonim')),
+    'author': find_author(soup),
     
     'title': soup.find('h1').text.strip() if soup.find('h1') else 'Fără titlu',
     'description': '', 
