@@ -6,6 +6,7 @@
 
 *Tehnologii si programe software folosite*:
 - Limbaj de programare utilizat: Python3.13
+- RDBSM utilizat: MariaDB
 - Editor de cod : Visual Studio Code
 - Librarii Python utilizate: beautifulsoup4 (pentru extragerea/scraping a informatiilor din HTML), fastapi (framework REST API), mysql-connector-python (driver oficial pentru comunicarea cu BD), ollama (LLM utilizat: llama3.2), requests (pentru descarcarea codului sursa al paginilor web), uvicorn (server REST API)
 - Pentru vizualizarea rezultatelor, vom utiliza interfata generata automat de FastAPI, precum si DBeaver pentru a verifica integritatea bazei de date (daca scrapingul functioneaza corect)
