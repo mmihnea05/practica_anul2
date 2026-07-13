@@ -54,6 +54,7 @@ def scrape_article(url):
     print(f"***Am procesat stirea cu urmatorul titlu: {data['title']}***")
     print("---------------------------------------------------------------------------------------------------------------------------------------------")
     print("\n")
+    
 
 # exemplu utilizare
 scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
