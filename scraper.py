@@ -62,6 +62,12 @@ def find_published_date(soup):
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
+    # hotnews
+    for author_meta_name in ['parsely-author', 'author']:
+        meta_author = soup.find('meta', attrs={'name': author_meta_name})
+        if meta_author and meta_author.get('content'):
+            return meta_author.get('content').strip()
+
     libertatea_element = soup.find('div', class_='box-authors')
     if libertatea_element:
         author_name_span = libertatea_element.find('span', class_='author-name')
@@ -112,6 +118,10 @@ def find_source(soup, url):
     return 'SursaNecunoscuta'
 
 def find_published_date(soup):
+    og_pub = soup.find('meta', property='article:published_time')
+    if og_pub and og_pub.get('content'):
+        return parse_to_datetime(og_pub['content'])
+
     # ProTV + antena3cnn
     protv_date = soup.find('span', attrs={'data-utc-date': True})
     if protv_date:
