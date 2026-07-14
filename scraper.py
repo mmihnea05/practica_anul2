@@ -4,6 +4,7 @@ import mysql.connector
 import ollama
 from datetime import datetime
 from dateutil import parser
+import re
 
 def generate_summary(text):
     try:
@@ -53,11 +54,26 @@ def parse_to_datetime(date_str):
             zi, luna_txt, an, ora = parts[0], parts[1], parts[2], parts[3]
             luna = luni.get(luna_txt.lower(), '01')
             return f"{an}-{luna}-{zi.zfill(2)} {ora}:00"
+        
+        # Agerpres
+        if '-' in clean_str and '.' not in clean_str:
+            parts = clean_str.split(' ')
+            data, ora = parts[0], parts[1]
+            zi, luna, an = data.split('-')
+            return f"{an}-{luna.zfill(2)}-{zi.zfill(2)} {ora}:00"
             
     except Exception:
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
+    # agerpres
+    paragraphs = soup.find_all('p')
+    for p in paragraphs:
+        text = p.get_text()
+        match = re.search(r'editor(?![\s-]online):\s*([^,)]+)', text, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+
     profit_author = soup.find('strong', class_='art-author')
     if profit_author:
         autor_link = profit_author.find('a')
@@ -94,12 +110,26 @@ def find_author(soup):
     digi24_element = soup.find('a', href=lambda href: href and "/autor/" in href)
     if digi24_element:
         return digi24_element.get_text(strip=True)
-        
+
     meta_author = soup.find('meta', {'name': 'author'})
     if meta_author and meta_author.get('content'):
         return meta_author.get('content').strip()
 
     return 'Anonim'
+
+def find_title(soup):
+    og_title = soup.find('meta', property='og:title')
+    if og_title and og_title.get('content'):
+        return og_title['content'].strip()
+
+    h1_element = soup.find('h1')
+    if h1_element:
+        return h1_element.get_text(strip=True)
+
+    if soup.title and soup.title.string:
+        return soup.title.string.strip()
+
+    return 'Fără titlu'
 
 def find_source(soup, url):
     if 'stirileprotv.ro' in url:
@@ -157,6 +187,12 @@ def find_published_date(soup):
         if date_span:
             raw_text = date_span.get_text(strip=True)
             return parse_to_datetime(raw_text)
+        
+    # Agerpres
+    agerpres_date = soup.find('li', class_='article-date')
+    if agerpres_date:
+        raw_text = agerpres_date.get_text(strip=True).replace('Data:', '').strip()
+        return parse_to_datetime(raw_text)
     
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -167,16 +203,12 @@ def scrape_article(url):
 
     data = {
     'source': find_source(soup, url),
-    
     'author': find_author(soup),
-    
-    'title': soup.find('h1').text.strip() if soup.find('h1') else 'Fără titlu',
+    'title': find_title(soup),
     'description': '', 
     'url': url,
     'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
-    
     'publishedAt': find_published_date(soup),
-    
     'content': ' '.join([p.text for p in soup.find_all('p')])[:1000]
 }
     
