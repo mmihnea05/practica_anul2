@@ -232,6 +232,14 @@ def find_category(soup, url):
     if 'zf.ro' in url:
         return generate_category(url) # folosim llama3.2 pentru a determina categoria pe baza URL-ului
     
+    # Agerpres
+    if 'agerpres.ro' in url:
+        flux_label = soup.find(string=lambda text: text and 'Flux:' in text)
+        if flux_label:
+            parent = flux_label.parent
+            category_link = parent.find_next('a')
+            if category_link:
+                return category_link.get_text(strip=True)
 
     return 'General'
 
@@ -343,6 +351,6 @@ def get_links_from_file(file_path):
 #scrape_article("https://economedia.ro/mercedes-benz-anunta-ca-a-investit-un-miliard-de-euro-pentru-a-dubla-capacitatea-fabricii-din-kecskemet.html")
 #scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
 #scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
-scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
+#scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
-#scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
+scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
