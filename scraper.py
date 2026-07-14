@@ -62,6 +62,12 @@ def find_published_date(soup):
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
+    libertatea_element = soup.find('div', class_='box-authors')
+    if libertatea_element:
+        author_name_span = libertatea_element.find('span', class_='author-name')
+        if author_name_span:
+            return author_name_span.get_text(strip=True)
+
     # + antena3cnn
     mediafax_element = soup.find('span', class_='single__authors')
     if mediafax_element:
@@ -80,7 +86,7 @@ def find_author(soup):
     digi24_element = soup.find('a', href=lambda href: href and "/autor/" in href)
     if digi24_element:
         return digi24_element.get_text(strip=True)
-
+    
     meta_author = soup.find('meta', {'name': 'author'})
     if meta_author and meta_author.get('content'):
         return meta_author.get('content').strip()
@@ -96,6 +102,8 @@ def find_source(soup, url):
         return "Antena3 CNN"
     if 'mediafax.ro' in url:
         return "Mediafax"
+    if 'libertatea.ro' in url:
+        return "Libertatea"
 
     og_site = soup.find('meta', property='og:site_name')
     if og_site and og_site.get('content'):
@@ -152,7 +160,9 @@ def scrape_article(url):
     print("\n")
 
 # exemplu utilizare
-scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
-scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
-scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
-scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
+#scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
+#scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
+#scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+#scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
+#scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
+scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
