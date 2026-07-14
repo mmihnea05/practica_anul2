@@ -1,0 +1,18 @@
+Sanatate
+Politica
+Economie
+Finante
+Actualitate
+Sport
+Meteo
+Monden
+Divertisment
+Tehnologie
+Educatie
+Auto
+
+# prompt pentru categorii:
+Intra pe urmatorul website ... si alege categoria acestei stiri dintre urmatoarele: 
+Sanatate, Politica, Economie, Finante, Actualitate, Sport, Meteo, Monden, Divertisment, 
+Tehnologie, Educatie, Auto. Foarte IMPORTANT, raspunde intr-un singur cuvant si alege
+strict din categoriile precizate mai sus.

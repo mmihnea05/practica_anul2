@@ -15,6 +15,20 @@ def generate_summary(text):
         return response['message']['content']
     except Exception:
         return text[:197] + "..."
+    
+def get_category(url):
+    prompt = (
+        f"Intra pe urmatorul website: {url} si alege categoria acestei stiri dintre urmatoarele: "
+        f"Sanatate, Politica, Economie, Finante, Actualitate, Sport, Meteo, Monden, Divertisment, "
+        f"Tehnologie, Educatie, Auto. Foarte IMPORTANT, raspunde intr-un singur cuvant si alege "
+        f"strict din categoriile precizate mai sus."
+    )
+    
+    try:
+        response = ollama.chat(model='llama3.2', messages=[{'role': 'user', 'content': prompt}])
+        return response['message']['content'].strip().rstrip('.')
+    except Exception:
+        return "Actualitate"
 
 def save_to_db(data):
     conn = mysql.connector.connect(host='localhost', user='admin', password='admin', database='news_db')
@@ -213,6 +227,11 @@ def find_category(soup, url):
         category_link = soup.find('a', class_='art-categ')
         if category_link:
             return category_link.get_text(strip=True)
+        
+    # zf
+    if 'zf.ro' in url:
+        return get_category(url) # folosim llama3.2 pentru a determina categoria pe baza URL-ului
+    
 
     return 'General'
 
@@ -322,8 +341,8 @@ def get_links_from_file(file_path):
 #scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
 #scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
 #scrape_article("https://economedia.ro/mercedes-benz-anunta-ca-a-investit-un-miliard-de-euro-pentru-a-dubla-capacitatea-fabricii-din-kecskemet.html")
-scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
-#scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
+#scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
+scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
 #scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
