@@ -14,3 +14,6 @@ async def get_news():
     articles = cursor.fetchall()
     conn.close()
     return articles
+
+
+# uvicorn main:app --reload -> pornire server API
