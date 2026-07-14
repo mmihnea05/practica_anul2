@@ -1,3 +1,4 @@
+from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 import mysql.connector
@@ -160,13 +161,20 @@ def find_source(soup, url):
     
     return 'SursaNecunoscuta'
 
-def find_category(soup):
+def find_category(soup, url):
     # pro tv
     category_div = soup.find('div', class_='article--section-information')
     if category_div:
         category_link = category_div.find('a')
         if category_link:
             return category_link.get_text(strip=True)
+        
+    # digi24
+    if 'digi24.ro' in url:
+        parsed_url = urlparse(url)
+        path_parts = parsed_url.path.strip('/').split('/')
+        if len(path_parts) >= 2 and path_parts[0] == 'stiri':
+            return path_parts[1].replace('-', ' ').capitalize()
     
     return 'General'
 
@@ -216,7 +224,7 @@ def scrape_article(url):
     'source': find_source(soup, url),
     'author': find_author(soup),
     'title': find_title(soup),
-    'category': find_category(soup),
+    'category': find_category(soup, url),
     'description': '', 
     'url': url,
     'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
@@ -270,8 +278,8 @@ def get_links_from_file(file_path):
 
 
 # exemplu utilizare
-scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
-#scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+#scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
+scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
 #scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
 #scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
 #scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
