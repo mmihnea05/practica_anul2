@@ -221,6 +221,42 @@ def scrape_article(url):
     print("---------------------------------------------------------------------------------------------------------------------------------------------")
     print("\n")
 
+def get_links_from_file(file_path):
+    links_list = []
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            # Citim fiecare linie și o adăugăm în listă doar dacă nu e goală
+            links_list = [line.strip() for line in f if line.strip()]
+    except FileNotFoundError:
+        print(f"Eroare: Fișierul '{file_path}' nu a fost găsit.")
+    
+    return links_list
+
+
+# exemplu utilizare
+links= get_links_from_file('links.txt')
+for url in links:
+    try:
+        scrape_article(url)
+    except Exception as e:
+        print(f"Eroare la procesarea {url}: {e}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # exemplu utilizare
 #scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
 #scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
@@ -231,4 +267,4 @@ def scrape_article(url):
 #scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
 #scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
-scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
+#scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
