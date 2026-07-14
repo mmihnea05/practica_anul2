@@ -62,6 +62,7 @@ def find_published_date(soup):
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
+    # + antena3cnn
     mediafax_element = soup.find('span', class_='single__authors')
     if mediafax_element:
         autor_link = mediafax_element.find('a')
@@ -88,20 +89,22 @@ def find_author(soup):
 
 def find_source(soup, url):
     if 'stirileprotv.ro' in url:
-        logo = soup.find('a', class_='logo')
-        if logo and logo.get('title'):
-            return logo.get('title')
         return "StirilePROTV"
+    if 'digi24.ro' in url:
+        return "Digi24"
+    if 'antena3.ro' in url:
+        return "Antena3 CNN"
+    if 'mediafax.ro' in url:
+        return "Mediafax"
 
-    
     og_site = soup.find('meta', property='og:site_name')
     if og_site and og_site.get('content'):
         return og_site.get('content').strip()
-
+    
     return 'SursaNecunoscuta'
 
 def find_published_date(soup):
-    # ProTV
+    # ProTV + antena3cnn
     protv_date = soup.find('span', attrs={'data-utc-date': True})
     if protv_date:
         return parse_to_datetime(protv_date['data-utc-date'])
@@ -152,3 +155,4 @@ def scrape_article(url):
 scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
 scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
