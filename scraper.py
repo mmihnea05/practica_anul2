@@ -16,7 +16,7 @@ def generate_summary(text):
     except Exception:
         return text[:197] + "..."
     
-def get_category(url):
+def generate_category(url):
     prompt = (
         f"Intra pe urmatorul website: {url} si alege categoria acestei stiri dintre urmatoarele: "
         f"Sanatate, Politica, Economie, Finante, Actualitate, Sport, Meteo, Monden, Divertisment, "
@@ -190,8 +190,8 @@ def find_category(soup, url):
         if len(path_parts) >= 2 and path_parts[0] == 'stiri':
             return path_parts[1].replace('-', ' ').capitalize()
         
-    # antena3cnn
-    if 'antena3.ro' in url:
+    # antena3cnn + mediafax
+    if 'antena3.ro' in url or 'mediafax.ro' in url:
         parsed_url = urlparse(url)
         path_parts = parsed_url.path.strip('/').split('/')
         return path_parts[0].replace('-', ' ').capitalize()
@@ -230,7 +230,7 @@ def find_category(soup, url):
         
     # zf
     if 'zf.ro' in url:
-        return get_category(url) # folosim llama3.2 pentru a determina categoria pe baza URL-ului
+        return generate_category(url) # folosim llama3.2 pentru a determina categoria pe baza URL-ului
     
 
     return 'General'
@@ -342,7 +342,7 @@ def get_links_from_file(file_path):
 #scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
 #scrape_article("https://economedia.ro/mercedes-benz-anunta-ca-a-investit-un-miliard-de-euro-pentru-a-dubla-capacitatea-fabricii-din-kecskemet.html")
 #scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
-scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
-#scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
+#scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
+scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
 #scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
