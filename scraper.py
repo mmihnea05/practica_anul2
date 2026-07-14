@@ -37,6 +37,16 @@ def parse_to_datetime(date_str):
         if ':' in date_str and '-' in date_str:
             return date_str
             
+        # 2. Ziarul Financiar
+        if ',' in date_str:
+            clean_str = date_str.replace(',', '').strip()
+            parts = clean_str.split(' ')
+            if len(parts) >= 2:
+                data_part = parts[0] # "08.07.2026"
+                ora_part = parts[1]  # "00:06"
+                zi, luna, an = data_part.split('.')
+                return f"{an}-{luna.zfill(2)}-{zi.zfill(2)} {ora_part}:00"
+        
         # Mediafax
         parts = date_str.replace(',', '').split()
         if len(parts) >= 4:
@@ -46,20 +56,6 @@ def parse_to_datetime(date_str):
             
     except Exception:
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-def find_published_date(soup):
-    # ProTV
-    protv_date = soup.find('span', attrs={'data-utc-date': True})
-    if protv_date:
-        return parse_to_datetime(protv_date['data-utc-date'])
-
-    # Mediafax
-    mediafax_container = soup.find('div', class_='display-flex gap-5')
-    if mediafax_container:
-        raw_text = mediafax_container.get_text(separator='|', strip=True).split('|')[0].rstrip(',')
-        return parse_to_datetime(raw_text)
-        
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
     profit_author = soup.find('strong', class_='art-author')
@@ -142,8 +138,16 @@ def find_published_date(soup):
     # Digi24
     digi_meta = soup.find('meta', attrs={'name': 'publish-date'})
     if digi_meta and digi_meta.get('content'):
-        return parse_to_datetime(digi_meta['content']) 
-
+        return parse_to_datetime(digi_meta['content'])
+    
+    # Ziarul Financiar
+    zf_meta = soup.find('div', class_='rb-new-meta')
+    if zf_meta:
+        date_span = zf_meta.find('span')
+        if date_span:
+            raw_text = date_span.get_text(strip=True)
+            return parse_to_datetime(raw_text)
+    
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def scrape_article(url):
@@ -184,3 +188,4 @@ scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-br
 scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
 scrape_article("https://economedia.ro/info-sud-est-cum-a-ratat-delta-dunarii-proiecte-pnrr-in-valoare-de-50-de-milioane-de-euro.html")
 scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
+scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
