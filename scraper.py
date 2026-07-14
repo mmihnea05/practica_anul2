@@ -76,6 +76,10 @@ def find_author(soup):
             return autor_link.text.strip()
         return protv_element.text.strip()
 
+    digi24_element = soup.find('a', href=lambda href: href and "/autor/" in href)
+    if digi24_element:
+        return digi24_element.get_text(strip=True)
+
     meta_author = soup.find('meta', {'name': 'author'})
     if meta_author and meta_author.get('content'):
         return meta_author.get('content').strip()
@@ -108,7 +112,7 @@ def find_published_date(soup):
         raw_text = mediafax_container.get_text(separator='|', strip=True).split('|')[0].rstrip(',')
         return parse_to_datetime(raw_text)
     
-    # Digi24: Extragere direct din meta tag-ul "publish-date"
+    # Digi24
     digi_meta = soup.find('meta', attrs={'name': 'publish-date'})
     if digi_meta and digi_meta.get('content'):
         return parse_to_datetime(digi_meta['content']) 
@@ -147,4 +151,4 @@ def scrape_article(url):
 # exemplu utilizare
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
-scrape_article("https://www.digi24.ro/stiri/externe/liderii-europeni-au-convenit-asupra-formarii-unei-coalitii-de-aparare-antiracheta-impreuna-cu-ucraina-3860793")
+scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
