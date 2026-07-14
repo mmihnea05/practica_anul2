@@ -175,6 +175,12 @@ def find_category(soup, url):
         path_parts = parsed_url.path.strip('/').split('/')
         if len(path_parts) >= 2 and path_parts[0] == 'stiri':
             return path_parts[1].replace('-', ' ').capitalize()
+        
+    # antena3cnn
+    if 'antena3.ro' in url:
+        parsed_url = urlparse(url)
+        path_parts = parsed_url.path.strip('/').split('/')
+        return path_parts[0].replace('-', ' ').capitalize()
     
     return 'General'
 
@@ -279,8 +285,8 @@ def get_links_from_file(file_path):
 
 # exemplu utilizare
 #scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
-scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
-#scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
+#scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+scrape_article("https://www.antena3.ro/sport/noua-tari-din-ue-inclusiv-romania-solicita-reducerea-finantarii-comitetului-olimpic-international-din-cauza-reprimirii-rusilor-795622.html")
 #scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
 #scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
 #scrape_article("https://economedia.ro/info-sud-est-cum-a-ratat-delta-dunarii-proiecte-pnrr-in-valoare-de-50-de-milioane-de-euro.html")
