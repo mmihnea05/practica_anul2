@@ -160,6 +160,16 @@ def find_source(soup, url):
     
     return 'SursaNecunoscuta'
 
+def find_category(soup):
+    # pro tv
+    category_div = soup.find('div', class_='article--section-information')
+    if category_div:
+        category_link = category_div.find('a')
+        if category_link:
+            return category_link.get_text(strip=True)
+    
+    return 'General'
+
 def find_published_date(soup):
     og_pub = soup.find('meta', property='article:published_time')
     if og_pub and og_pub.get('content'):
@@ -206,7 +216,7 @@ def scrape_article(url):
     'source': find_source(soup, url),
     'author': find_author(soup),
     'title': find_title(soup),
-    'category': '',
+    'category': find_category(soup),
     'description': '', 
     'url': url,
     'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
@@ -260,7 +270,7 @@ def get_links_from_file(file_path):
 
 
 # exemplu utilizare
-#scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
+scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
 #scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
 #scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
 #scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
@@ -270,4 +280,4 @@ def get_links_from_file(file_path):
 #scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
-scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
+#scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
