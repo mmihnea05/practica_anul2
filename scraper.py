@@ -28,11 +28,19 @@ def parse_to_datetime(date_str):
     # Dictionar pentru luni
     luni = {'ian.': '01', 'feb.': '02', 'mar.': '03', 'apr.': '04', 'mai': '05', 'iun.': '06', 
             'iul.': '07', 'aug.': '08', 'sep.': '09', 'oct.': '10', 'noi.': '11', 'dec.': '12'}
-    
+
     try:
         if 'T' in date_str:
             # parser.parse descompune automat formatul ISO: 2026-07-13T21:30:00+03:00
             return parser.parse(date_str).strftime('%Y-%m-%d %H:%M:%S')
+
+        # Agerpres
+        if '  ' in date_str:
+            parts = date_str.split('  ')
+            if len(parts) >= 2:
+                data, ora = parts[0].strip(), parts[1].strip()
+                zi, luna, an = data.split('-')
+                return f"{an}-{luna.zfill(2)}-{zi.zfill(2)} {ora}:00"
 
         # ProTV
         if ':' in date_str and '-' in date_str:
@@ -53,14 +61,7 @@ def parse_to_datetime(date_str):
         if len(parts) >= 4:
             zi, luna_txt, an, ora = parts[0], parts[1], parts[2], parts[3]
             luna = luni.get(luna_txt.lower(), '01')
-            return f"{an}-{luna}-{zi.zfill(2)} {ora}:00"
-        
-        # Agerpres
-        if '-' in clean_str and '.' not in clean_str:
-            parts = clean_str.split(' ')
-            data, ora = parts[0], parts[1]
-            zi, luna, an = data.split('-')
-            return f"{an}-{luna.zfill(2)}-{zi.zfill(2)} {ora}:00"
+            return f"{an}-{luna}-{zi.zfill(2)} {ora}:00"   
             
     except Exception:
         return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -237,7 +238,7 @@ def get_links_from_file(file_path):
 links= get_links_from_file('links.txt')
 for url in links:
     try:
-        scrape_article(url)
+        scrape_article(url) 
     except Exception as e:
         print(f"Eroare la procesarea {url}: {e}")
 
@@ -268,3 +269,4 @@ for url in links:
 #scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
+#scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")

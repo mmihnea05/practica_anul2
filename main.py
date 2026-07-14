@@ -17,3 +17,4 @@ async def get_news():
 
 
 # uvicorn main:app --reload -> pornire server API
+# http://127.0.0.1:8000/docs -> link interfata Swagger UI pentru testare API
