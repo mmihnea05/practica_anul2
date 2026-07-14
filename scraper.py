@@ -62,6 +62,12 @@ def find_published_date(soup):
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def find_author(soup):
+    profit_author = soup.find('strong', class_='art-author')
+    if profit_author:
+        autor_link = profit_author.find('a')
+        if autor_link:
+            return autor_link.get_text(strip=True)
+
     # hotnews
     for author_meta_name in ['parsely-author', 'author']:
         meta_author = soup.find('meta', attrs={'name': author_meta_name})
@@ -92,7 +98,7 @@ def find_author(soup):
     digi24_element = soup.find('a', href=lambda href: href and "/autor/" in href)
     if digi24_element:
         return digi24_element.get_text(strip=True)
-    
+        
     meta_author = soup.find('meta', {'name': 'author'})
     if meta_author and meta_author.get('content'):
         return meta_author.get('content').strip()
@@ -170,9 +176,11 @@ def scrape_article(url):
     print("\n")
 
 # exemplu utilizare
-#scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
-#scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
-#scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
-#scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
-#scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
+scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
+scrape_article("https://stirileprotv.ro/stiri/inspectorul-pro/polite-rca-false-pe-strazile-din-romania-brokerita-recunoaste-nu-ma-inteleg-pe-mine-cum-de-tot-fac-asta-asf-se-balbaie.html")
+scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+scrape_article("https://www.antena3.ro/life/travel/insula-din-grecia-unde-apa-marii-este-calda-aproape-tot-timpul-anului-iar-vantul-nu-bate-niciodata-795045.html")
+scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
 scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
+scrape_article("https://economedia.ro/info-sud-est-cum-a-ratat-delta-dunarii-proiecte-pnrr-in-valoare-de-50-de-milioane-de-euro.html")
+scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
