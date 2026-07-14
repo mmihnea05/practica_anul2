@@ -5,6 +5,7 @@ CREATE TABLE articles (
     source VARCHAR(100),
     author VARCHAR(100),
     title VARCHAR(255),
+    category VARCHAR(100),
     description TEXT,
     url VARCHAR(500) UNIQUE,
     urlToImage VARCHAR(500),

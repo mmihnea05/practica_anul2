@@ -18,8 +18,8 @@ def generate_summary(text):
 def save_to_db(data):
     conn = mysql.connector.connect(host='localhost', user='admin', password='admin', database='news_db')
     cursor = conn.cursor()
-    query = """INSERT IGNORE INTO articles (source, author, title, description, url, urlToImage, publishedAt, content) 
-               VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+    query = """INSERT IGNORE INTO articles (source, author, title, category, description, url, urlToImage, publishedAt, content) 
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     cursor.execute(query, tuple(data.values()))
     conn.commit()
     conn.close()
@@ -206,6 +206,7 @@ def scrape_article(url):
     'source': find_source(soup, url),
     'author': find_author(soup),
     'title': find_title(soup),
+    'category': '',
     'description': '', 
     'url': url,
     'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
@@ -235,12 +236,12 @@ def get_links_from_file(file_path):
 
 
 # exemplu utilizare
-links= get_links_from_file('links.txt')
-for url in links:
-    try:
-        scrape_article(url) 
-    except Exception as e:
-        print(f"Eroare la procesarea {url}: {e}")
+#links= get_links_from_file('links.txt')
+#for url in links:
+ #   try:
+  #      scrape_article(url) 
+   # except Exception as e:
+    #    print(f"Eroare la procesarea {url}: {e}")
 
 
 
@@ -269,4 +270,4 @@ for url in links:
 #scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
 #scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
 #scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
-#scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
+scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
