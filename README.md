@@ -2,14 +2,15 @@
 
 *Denumire proiect*: **Aplicatie python de scraping pentru stiri din mediul online**
 
-*Descriere aplicatie*: Aplicatia va face scraping pe mai multe site-uri de stiri, colectand titlul, continutul, precum si metadatele acestora (data, autor, categorie), urmand ca toate aceste informatii sa fie stocate intr-o baza de date localhost MySQL. De asemenea, vom folosi un API pentru a centraliza si stoca toate informatiile stranse in BD, impachetate in format JSON (serializare). Diverse cereri API de filtrare catre baza de date vor putea fi adaugate pentru o mai buna vizualizare a informatiilor (ex: vizualizare stiri dupa id, dupa sursa, dupa autor, vizualizare stire in ordine descrescatoare datei publicarii, etc.)
+*Descriere aplicatie*: Aplicatia va face scraping pe mai multe site-uri de stiri, colectand titlul, continutul, precum si metadatele acestora (data, autor, categorie), urmand ca toate aceste informatii sa fie stocate intr-o baza de date localhost MySQL. De asemenea, vom folosi un API pentru a centraliza si stoca toate informatiile stranse in BD, impachetate in format JSON (serializare). Diverse cereri API de filtrare catre baza de date vor putea fi adaugate pentru o mai buna vizualizare a informatiilor (ex: vizualizare stiri dupa id, dupa sursa, dupa autor, vizualizare stire in ordine descrescatoare datei publicarii). Pentru a demonstra si utilizarea acestor date colectate de catre API, acestea vor putea fi vizualizate prin intermediul unei interfete web ce va avea functionalitatea inclusiv de a face scraping pe un url dat de catre utilizator.
 
 *Tehnologii si programe software folosite*:
 - Limbaj de programare utilizat: Python3.13
 - RDBMS utilizat: MariaDB
 - Editor de cod : Visual Studio Code
-- Librarii Python utilizate: beautifulsoup4 (pentru extragerea/scraping a informatiilor din HTML), fastapi (framework REST API), mysql-connector-python (driver oficial pentru comunicarea cu BD), ollama (LLM utilizat: llama3.2), requests (pentru descarcarea codului sursa al paginilor web), uvicorn (server REST API)
+- Librarii Python utilizate: beautifulsoup4 (pentru extragerea/scraping a informatiilor din HTML), fastapi (framework REST API), mysql-connector-python (driver oficial pentru comunicarea cu BD), ollama (LLM utilizat: llama3.2), requests (pentru descarcarea codului sursa al paginilor web), uvicorn (server REST API), streamlit (framework pentru frontend), pandas (biblioteca pentru manipularea datelor)
 - Pentru vizualizarea rezultatelor, vom utiliza interfata generata automat de FastAPI, precum si DBeaver pentru a verifica integritatea bazei de date (daca scrapingul functioneaza corect)
+- Utilizatorul va putea face scraping pe orice url prin intermediul interfetei grafice web pusa la dispozitie, precum si vizualizarea si filtrarea informatiilor colectate din BD
 - Toate pachetele necesare proiectului au fost instalate in cadrul unui venv (virtual environment)
 
 *Denumire prezentare*: **Diferenta dintre arhitecturile de procesor ARM si x86**
