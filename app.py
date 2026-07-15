@@ -31,8 +31,10 @@ if st.button("Refresh the list"):
         data = requests.get(f"{API_URL}/news").json()
         if data:
             df = pd.DataFrame(data)
-            st.dataframe(df[['source', 'title', 'category', 'publishedAt']])
+            st.dataframe(df[['source', 'author', 'title', 'category', 'description', 'url', 'urlToImage', 'publishedAt', 'content']])
         else:
             st.info("No news articles available in the database.")
     except Exception as e:
         st.error("Failed to retrieve news articles.")
+
+# pornire interfata Streamlit: streamlit run app.py
