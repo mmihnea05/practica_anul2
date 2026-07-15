@@ -10,7 +10,7 @@
 - Editor de cod : Visual Studio Code
 - Librarii Python utilizate: beautifulsoup4 (pentru extragerea/scraping a informatiilor din HTML), fastapi (framework REST API), mysql-connector-python (driver oficial pentru comunicarea cu BD), ollama (LLM utilizat: llama3.2), requests (pentru descarcarea codului sursa al paginilor web), uvicorn (server REST API), streamlit (framework pentru frontend), pandas (biblioteca pentru manipularea datelor)
 - Pentru vizualizarea rezultatelor, vom utiliza interfata generata automat de FastAPI, precum si DBeaver pentru a verifica integritatea bazei de date (daca scrapingul functioneaza corect)
-- Utilizatorul va putea face scraping pe orice url prin intermediul interfetei grafice web pusa la dispozitie, precum si vizualizarea tabelara si filtrarea informatiilor colectate din BD
+- Utilizatorul va putea face scraping pe orice URL prin intermediul interfetei grafice web pusa la dispozitie, precum si vizualizarea tabelara si filtrarea informatiilor colectate din BD
 - Toate pachetele necesare proiectului au fost instalate in cadrul unui venv (virtual environment)
 
 *Denumire prezentare*: **Diferenta dintre arhitecturile de procesor ARM si x86**
