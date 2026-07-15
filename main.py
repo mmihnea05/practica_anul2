@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from scraper import scrape_article
 import mysql.connector
 
 app = FastAPI()
@@ -41,6 +42,14 @@ async def get_news_by_source(source_name: str):
     articles = cursor.fetchall()
     conn.close()
     return articles
+
+@app.post("/scrape")
+async def trigger_scrape(url: str):
+    try:
+        scrape_article(url) 
+        return {"status": "success", "message": "Scraping completat cu succes."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # uvicorn main:app --reload -> pornire server API
 # http://127.0.0.1:8000/docs -> link interfata Swagger UI pentru testare API

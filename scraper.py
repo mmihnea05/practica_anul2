@@ -318,14 +318,6 @@ def get_links_from_file(file_path):
     return links_list
 
 
-# exemplu utilizare
-#links= get_links_from_file('links.txt')
-#for url in links:
- #   try:
-  #      scrape_article(url) 
-   # except Exception as e:
-    #    print(f"Eroare la procesarea {url}: {e}")
-
 
 
 
@@ -343,14 +335,22 @@ def get_links_from_file(file_path):
 
 
 # exemplu utilizare
-scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
-scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
-scrape_article("https://www.antena3.ro/sport/noua-tari-din-ue-inclusiv-romania-solicita-reducerea-finantarii-comitetului-olimpic-international-din-cauza-reprimirii-rusilor-795622.html")
-scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
-scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
-scrape_article("https://economedia.ro/mercedes-benz-anunta-ca-a-investit-un-miliard-de-euro-pentru-a-dubla-capacitatea-fabricii-din-kecskemet.html")
-scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
-scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
-scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
-scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
-scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
+#links= get_links_from_file('links.txt')
+#for url in links:
+#    try:
+#      scrape_article(url) 
+#      except Exception as e:
+#       print(f"Eroare la procesarea {url}: {e}")
+
+# exemplu utilizare
+#scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
+#scrape_article("https://www.digi24.ro/stiri/externe/mapamond/donald-trump-sustine-ca-sua-ar-trebui-sa-controleze-stramtoarea-ormuz-si-ameninta-iranul-o-sa-i-lovim-foarte-tare-3860305")
+#scrape_article("https://www.antena3.ro/sport/noua-tari-din-ue-inclusiv-romania-solicita-reducerea-finantarii-comitetului-olimpic-international-din-cauza-reprimirii-rusilor-795622.html")
+#scrape_article("https://www.libertatea.ro/stiri/stiri-brasov-fabrica-purolite-brasov-investeste-560000-euro-sistem-tratare-apa-5814473")
+#scrape_article("https://hotnews.ro/sorin-grindeanu-virulent-la-adresa-pnl-usr-ne-vom-bate-cu-aceasta-pesta-a-hastagilor-pe-tot-terenul-2299618")
+#scrape_article("https://economedia.ro/mercedes-benz-anunta-ca-a-investit-un-miliard-de-euro-pentru-a-dubla-capacitatea-fabricii-din-kecskemet.html")
+#scrape_article("https://profit.ro/povesti-cu-profit/energie/pas-inainte-dupa-esec-complexul-energetic-oltenia-si-alro-slatina-pas-inainte-pentru-baterii-de-950-mw-langa-fotovoltaicele-ceo-omv-petrom-tinmar-dupa-esecul-centralei-pe-gaze-naturale-22515087")
+#scrape_article("https://www.zf.ro/carturesti-se-extinde-in-audio/mihaela-pana-post-merger-integration-manager-audiotribe-roman-marile-23190496")
+#scrape_article("https://www.mediafax.ro/politic/grindeanu-spune-ca-e-de-acord-cu-propunerile-facute-de-varujan-pambuccian-si-kelemen-hunor-privind-noul-guvern-23771576")
+#scrape_article("https://agerpres.ro/2026/07/09/reportaj-covasna-drumul-matasii-nilul-si-mostenirea-unui-calator---karda-zoltan--1574639")
+#scrape_article("https://agerpres.ro/social/2026/07/13/buzau-31-de-proiectile-de-artilerie-descoperite-pe-un-santier--1575719")
