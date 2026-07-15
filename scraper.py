@@ -177,11 +177,12 @@ def find_source(soup, url):
 
 def find_category(soup, url):
     # pro tv
-    category_div = soup.find('div', class_='article--section-information')
-    if category_div:
-        category_link = category_div.find('a')
-        if category_link:
-            return category_link.get_text(strip=True)
+    if 'stirileprotv.ro' in url:
+        category_div = soup.find('div', class_='article--section-information')
+        if category_div:
+            link = category_div.find('a')
+            if link:
+                return link.get_text(strip=True)
         
     # digi24
     if 'digi24.ro' in url:
@@ -310,7 +311,6 @@ def get_links_from_file(file_path):
     links_list = []
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            # Citim fiecare linie și o adăugăm în listă doar dacă nu e goală
             links_list = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
         print(f"Eroare: Fișierul '{file_path}' nu a fost găsit.")
