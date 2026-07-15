@@ -4,7 +4,7 @@ import pandas as pd
 
 API_URL = "http://127.0.0.1:8000"
 
-st.set_page_config(page_title="Web Scraper", layout="wide")
+st.set_page_config(page_title="Web Scraper", page_icon="📰", layout="wide")
 st.title("📰 Automated web scraper for news articles")
 
 st.subheader("Add a new article")
