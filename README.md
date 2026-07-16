@@ -23,6 +23,6 @@
 5. Arhitectura ARM: Eficienta prin simplitate (RISC)
 6. RISC vs CISC: Diferentele fundamentale dintre seturile de instructiuni
 7. Consumul energetic si managementul termic: ARM vs x86
-8. Performanta in calculul de inalta densitate (servere vs dispozitive mobile)
+8. ARM vs x86 in servere virtuale private
 9. Compatibilitatea software si provocarile ecosistemelor
-10. Segmentarea pietei: Unde domina x86 si unde straluceste ARM? 
+10. Bibliografie
