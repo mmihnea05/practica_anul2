@@ -40,4 +40,39 @@ if st.button("Refresh the list"):
     except Exception as e:
         st.error("Failed to retrieve news articles.")
 
+st.divider()
+st.subheader("Manage Database")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.write("### Delete news article by ID")
+    article_id_to_delete = st.text_input("Enter the ID of the article to delete:")
+    if st.button("Delete article"):
+        try:
+            resp = requests.delete(f"{API_URL}/news/{article_id_to_delete}")
+            if resp.status_code == 200:
+                st.success(f"Article with ID {article_id_to_delete} has been deleted successfully!")
+            else:
+                st.error("Article not found or an error occurred.")
+        except Exception as e:
+            st.error(f"Unable to contact the server: {e}")
+
+with col2:
+    st.write("### Delete all news articles")
+    st.warning("Warning! This action will clear the entire database.")
+    confirm_delete_all = st.checkbox("Confirm that I want to delete all articles")
+    if st.button("Delete all articles"):
+        if confirm_delete_all:
+            try:
+                resp = requests.delete(f"{API_URL}/news")
+                if resp.status_code == 200:
+                    st.success("All news articles have been deleted from the database.")
+                else:
+                    st.error("Error occurred while deleting articles.")
+            except Exception as e:
+                st.error(f"Unable to contact the server: {e}")
+        else:
+            st.warning("Please check the confirmation box to delete all articles.")
+
 # pornire interfata Streamlit: streamlit run app.py

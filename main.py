@@ -50,6 +50,28 @@ async def trigger_scrape(url: str):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.delete("/news/{article_id}")
+async def delete_news_article(article_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM articles WHERE id = %s", (article_id,))
+    conn.commit()
+    rows_affected = cursor.rowcount
+    conn.close()
+    
+    if rows_affected == 0:
+        raise HTTPException(status_code=404, detail="Stirea nu a fost gasita.")
+    return {"status": "success", "message": f"Stirea cu ID-ul {article_id} a fost stearsa."}
+
+@app.delete("/news")
+async def delete_all_news():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM articles")
+    conn.commit()
+    conn.close()
+    return {"status": "success", "message": "Toate stirile au fost sterse din baza de date."}
 
 # uvicorn main:app --reload -> pornire server API
 # http://127.0.0.1:8000/docs -> link interfata Swagger UI pentru testare API
