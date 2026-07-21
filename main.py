@@ -46,8 +46,8 @@ async def get_news_by_source(source_name: str):
 @app.post("/scrape")
 async def trigger_scrape(url: str):
     try:
-        scrape_article(url) 
-        return {"status": "success", "message": "Scraping completat cu succes."}
+        result = scrape_article(url) 
+        return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

@@ -39,6 +39,14 @@ def save_to_db(data):
     conn.commit()
     conn.close()
 
+def article_exists(url):
+    conn = mysql.connector.connect(host='localhost', user='admin', password='admin', database='news_db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM articles WHERE url = %s", (url,))
+    result = cursor.fetchone()
+    conn.close()
+    return result is not None
+
 def parse_to_datetime(date_str):
     # Dictionar pentru luni
     luni = {'ian.': '01', 'feb.': '02', 'mar.': '03', 'apr.': '04', 'mai': '05', 'iun.': '06', 
@@ -282,21 +290,24 @@ def find_published_date(soup):
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def scrape_article(url):
+    if article_exists(url):
+        return {"status": "duplicate", "message": "Aceasta stire a fost deja procesata."}
+
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers)
     soup = BeautifulSoup(response.content, 'html.parser')
 
     data = {
-    'source': find_source(soup, url),
-    'author': find_author(soup),
-    'title': find_title(soup),
-    'category': find_category(soup, url),
-    'description': '', 
-    'url': url,
-    'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
-    'publishedAt': find_published_date(soup),
-    'content': ' '.join([p.text for p in soup.find_all('p')])[:1000]
-}
+        'source': find_source(soup, url),
+        'author': find_author(soup),
+        'title': find_title(soup),
+        'category': find_category(soup, url),
+        'description': '', 
+        'url': url,
+        'urlToImage': soup.find('meta', property='og:image')['content'] if soup.find('meta', property='og:image') else '',
+        'publishedAt': find_published_date(soup),
+        'content': ' '.join([p.text for p in soup.find_all('p')])[:1000]
+    }
     
     data['description'] = generate_summary(data['content'])
 
@@ -306,6 +317,8 @@ def scrape_article(url):
     print(f"# Am procesat stirea cu urmatorul titlu: {data['title']} #")
     print("---------------------------------------------------------------------------------------------------------------------------------------------")
     print("\n")
+    
+    return {"status": "success", "message": "Stirea a fost adaugata cu succes!"}
 
 def get_links_from_file(file_path):
     links_list = []

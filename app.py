@@ -14,10 +14,13 @@ with st.container():
         if url_input:
             with st.spinner('Processing the news article...'):
                 try:
-                    # apel endpoint scrape din main.py
                     resp = requests.post(f"{API_URL}/scrape", params={"url": url_input})
                     if resp.status_code == 200:
-                        st.success("The news article has been added to the database!")
+                        res_data = resp.json()
+                        if res_data.get("status") == "duplicate":
+                            st.warning("This news article has already been processed and exists in the database.")
+                        else:
+                            st.success("The news article has been added to the database!")
                     else:
                         st.error("Error occurred while scraping.")
                 except Exception as e:
