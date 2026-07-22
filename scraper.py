@@ -280,6 +280,14 @@ def find_published_date(soup):
         if date_span:
             raw_text = date_span.get_text(strip=True)
             return parse_to_datetime(raw_text)
+
+    # alta structura Ziarul Financiar
+    zf_date_span = soup.find('span', class_='date')
+    if zf_date_span:
+        small_elem = zf_date_span.find('small')
+        if small_elem:
+            raw_text = small_elem.get_text(strip=True)
+            return parse_to_datetime(raw_text)
         
     # Agerpres
     agerpres_date = soup.find('li', class_='article-date')
