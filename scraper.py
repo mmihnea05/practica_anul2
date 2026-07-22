@@ -153,7 +153,7 @@ def find_title(soup):
     if soup.title and soup.title.string:
         return soup.title.string.strip()
 
-    return 'Fără titlu'
+    return 'Fara titlu'
 
 def find_source(soup, url):
     if 'stirileprotv.ro' in url:
@@ -181,7 +181,7 @@ def find_source(soup, url):
     if og_site and og_site.get('content'):
         return og_site.get('content').strip()
     
-    return 'SursaNecunoscuta'
+    return 'Sursa Necunoscuta'
 
 def find_category(soup, url):
     # pro tv
@@ -334,7 +334,7 @@ def get_links_from_file(file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             links_list = [line.strip() for line in f if line.strip()]
     except FileNotFoundError:
-        print(f"Eroare: Fișierul '{file_path}' nu a fost găsit.")
+        print(f"Eroare: Fisierul '{file_path}' nu a fost gasit.")
     
     return links_list
 
