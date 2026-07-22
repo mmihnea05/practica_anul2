@@ -356,12 +356,12 @@ def get_links_from_file(file_path):
 
 
 # exemplu utilizare
-links= get_links_from_file('links.txt')
-for url in links:
-    try:
-      scrape_article(url) 
-    except Exception as e:
-      print(f"Eroare la procesarea {url}: {e}")
+#links= get_links_from_file('links.txt')
+#for url in links:
+#    try:
+#      scrape_article(url) 
+#    except Exception as e:
+#      print(f"Eroare la procesarea {url}: {e}")
 
 # exemplu utilizare
 #scrape_article("https://stirileprotv.ro/stiri/international/politico-o-ancheta-de-corup-ie-a-declansat-remanierea-surprinzatoare-a-cabinetului-ucrainean-decisa-de-zelenski.html")
