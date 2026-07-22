@@ -32,8 +32,12 @@ st.subheader("News articles saved in the database")
 if st.button("Refresh the list"):
     try:
         data = requests.get(f"{API_URL}/news").json()
+        # formatare coloana publishedAt
         if data:
             df = pd.DataFrame(data)
+            if 'publishedAt' in df.columns:
+                df['publishedAt'] = pd.to_datetime(df['publishedAt']).dt.strftime('%d.%m.%Y, %H:%M:%S')
+           
             st.dataframe(df[['id', 'source', 'author', 'title', 'category', 'description', 'url', 'urlToImage', 'publishedAt', 'content']])
         else:
             st.info("No news articles available in the database.")
