@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import pandas as pd
+import time
 
 API_URL = "http://127.0.0.1:8000"
 
@@ -21,6 +22,7 @@ with st.container():
                             st.warning("This news article has already been processed and exists in the database.")
                         else:
                             st.success("The news article has been added to the database!")
+                            time.sleep(2)
                             st.rerun() # update interface after adding a new article
                     else:
                         st.error("Error occurred while scraping.")
